@@ -3,11 +3,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
+import androidx.room.TypeConverters
 
 
-@Database(entities = arrayOf(Emplyee::class), version = 1, exportSchema = false)
+@Database(entities = [Person::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class RoomSingleton : RoomDatabase(){
-    abstract fun employeeDao():EmployeeDao
+    abstract fun personDao():PersonDao
 
     companion object{
         private var INSTANCE: RoomSingleton? = null
@@ -16,7 +18,7 @@ abstract class RoomSingleton : RoomDatabase(){
                 INSTANCE = Room.databaseBuilder(
                     context,
                     RoomSingleton::class.java,
-                    "roomdb")
+                    "person_db")
                     .build()
             }
 

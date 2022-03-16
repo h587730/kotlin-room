@@ -7,10 +7,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface EmployeeDao{
-    @Query("SELECT * FROM employeeTbl ORDER BY id DESC")
-    fun allEmplyees(): LiveData<List<Emplyee>>
+interface PersonDao{
+    @Query("SELECT * FROM person_table")
+    fun allPersons(): LiveData<List<Person>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(student: Emplyee)
+    fun insert(person: Person)
 }
