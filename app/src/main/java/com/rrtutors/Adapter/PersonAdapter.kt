@@ -1,22 +1,23 @@
-package com.rrtutors
+package com.rrtutors.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.rrtutors.Person
+import com.rrtutors.R
 
 class PersonAdapter(private val persons: List<Person>) : RecyclerView.Adapter<PersonAdapter.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_person, parent, false)
         return ViewHolder(view)
 
     }
 
-    override fun onBindViewHolder(holder: PersonAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val person = persons[position]
         holder.bind(person)
     }
