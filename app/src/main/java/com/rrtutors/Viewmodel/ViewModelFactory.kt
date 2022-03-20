@@ -1,14 +1,14 @@
-package com.rrtutors.Viewmodels
+package com.rrtutors.Viewmodel
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class PersonViewModelFactory(var application: Application): ViewModelProvider.Factory {
+class ViewModelFactory(var application: Application): ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PersonViewModel::class.java)) {
-            return PersonViewModel(application) as T
+        if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
+            return QuizViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

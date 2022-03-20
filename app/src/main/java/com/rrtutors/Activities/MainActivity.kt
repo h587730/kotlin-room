@@ -6,37 +6,38 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rrtutors.Adapter.PersonAdapter
 import com.rrtutors.R
-import com.rrtutors.Viewmodels.PersonViewModel
-import com.rrtutors.Viewmodels.PersonViewModelFactory
+import com.rrtutors.Viewmodel.QuizViewModel
+import com.rrtutors.Viewmodel.ViewModelFactory
 
 private const val TAG1 = "onCreateOptionsMenu"
 private const val TAG2 = "onOptionsItemSelected"
-private const val TAG3 = "PersonRecieved"
-private const val TAG4 = "showNewList"
 
 class MainActivity : AppCompatActivity() {
 
     private var ADD_REQ: Int = 42
     private var QUIZ_REQ: Int = 43
 
+
     lateinit var recyclerView: RecyclerView;
-    private lateinit var model: PersonViewModel
+    private lateinit var viewmodel: QuizViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         recyclerView = findViewById(R.id.recyclerView)
         // Get the view model
 
-        val modelfactory = PersonViewModelFactory(application)
-        model = ViewModelProvider(this, modelfactory).get(PersonViewModel::class.java)
+        val modelfactory = ViewModelFactory(application)
+        viewmodel = ViewModelProvider(this, modelfactory).get(QuizViewModel::class.java)
 
 
         // Specify layout for recycler view
@@ -45,12 +46,14 @@ class MainActivity : AppCompatActivity() {
         )
         recyclerView.layoutManager = linearLayoutManager
 
-
         // Observe the model
-        model.allPersons.observe(this, Observer { persons ->
+        viewmodel.allPersons.observe(this, Observer { persons ->
             // Data bind the recycler view
             recyclerView.adapter = PersonAdapter(persons)
         })
+
+
+
 
     }
 

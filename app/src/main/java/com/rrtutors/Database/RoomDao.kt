@@ -1,10 +1,14 @@
 package com.rrtutors
 
 import androidx.lifecycle.LiveData
+import androidx.room.*
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+
+
 
 @Dao
 interface PersonDao{
@@ -13,4 +17,7 @@ interface PersonDao{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(person: Person)
+
+    @Delete
+    fun delete(person: Person)
 }
