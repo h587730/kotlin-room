@@ -97,10 +97,11 @@ class QuizViewModel(application:Application) : ViewModel() {
         wrongPerson1: Person?,
         wrongPerson2: Person?) : List<Person?> {
 
-        val randomizedList : List<Person?> = listOf(correctPerson, wrongPerson1, wrongPerson2)
-        return randomizedList.shuffled().toList()
+        randomList  = listOf(correctPerson, wrongPerson1, wrongPerson2)
+        return randomList.shuffled().toList()
 
     }
+
 
 
 

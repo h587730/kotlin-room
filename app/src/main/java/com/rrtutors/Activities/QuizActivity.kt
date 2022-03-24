@@ -59,7 +59,7 @@ class QuizActivity : AppCompatActivity() {
 
         btnAlt1.setOnClickListener {
             Log.i(TAG1, "${viewmodel.personList.component1()} equals ${viewmodel.correctPerson.value}")
-            if (viewmodel.correctPerson.value?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
+            if (viewmodel.randomList.component1()?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
                 viewmodel.increaseScore()
             }
             viewmodel.increaseAttempts()
@@ -70,7 +70,7 @@ class QuizActivity : AppCompatActivity() {
 
         btnAlt2.setOnClickListener {
             Log.i(TAG1, "${viewmodel.personList.component2()} equals ${viewmodel.wrongPerson1.value}")
-            if (viewmodel.wrongPerson1.value?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
+            if (viewmodel.randomList.component2()?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
                 viewmodel.increaseScore()
             }
             viewmodel.increaseAttempts()
@@ -81,7 +81,7 @@ class QuizActivity : AppCompatActivity() {
 
         btnAlt3.setOnClickListener {
             Log.i(TAG1, "${viewmodel.personList.component3()} equals ${viewmodel.wrongPerson2.value}")
-            if (viewmodel.wrongPerson2.value?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
+            if (viewmodel.randomList.component3()?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
                 viewmodel.increaseScore()
             }
             viewmodel.increaseAttempts()
@@ -105,24 +105,24 @@ class QuizActivity : AppCompatActivity() {
             tvAttemptsX.text = attempts.toString()
         }
 
-
+/*
         viewmodel.correctPerson.observe(this) { correctPerson ->
             btnAlt1.text = correctPerson.name
-        }
+        }*/
+
 
         viewmodel.correctPerson.observe(this){ correctPerson ->
             ivQuizPic.setImageBitmap(correctPerson.image)
             Log.i(TAG1, "Correct image: ${correctPerson.image}")
         }
-
+/*
         viewmodel.wrongPerson1.observe(this) { wrongPerson1 ->
             btnAlt2.text = wrongPerson1.name
         }
 
-        viewmodel.wrongPerson2.observe(this){ wrongPerson2 ->
+        viewmodel.wrongPerson2.observe(this) { wrongPerson2 ->
             btnAlt3.text = wrongPerson2.name
-        }
-
+        }*/
 
     }
 
@@ -131,10 +131,17 @@ class QuizActivity : AppCompatActivity() {
             viewmodel.personList = allPersons
             Log.i(TAG1, "${viewmodel.personList}")
             viewmodel.assignQuizValues(viewmodel.shufflePersonList())
-
+            randomButtons()
         }
     }
 
+    private fun randomButtons() {
+        viewmodel.randomList = viewmodel.randomizeOrder(viewmodel.correctPerson.value, viewmodel.wrongPerson1.value,
+        viewmodel.wrongPerson2.value)
+        btnAlt1.text = viewmodel.randomList.component1()?.name
+        btnAlt2.text = viewmodel.randomList.component2()?.name
+        btnAlt3.text = viewmodel.randomList.component3()?.name
+    }
 
 
 }
