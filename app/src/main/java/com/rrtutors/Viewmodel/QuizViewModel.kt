@@ -48,17 +48,17 @@ class QuizViewModel(application:Application) : ViewModel() {
 
 
 
-    var correctPerson: MutableLiveData<Person> = MutableLiveData()
+    var correctPerson: MutableLiveData<Person?> = MutableLiveData()
 
     /*val correctPerson: MutableLiveData<Person>
         get() = _correctPerson*/
 
-    var wrongPerson1: MutableLiveData<Person> = MutableLiveData()
+    var wrongPerson1: MutableLiveData<Person?> = MutableLiveData()
 
     /*val wrongPerson1: MutableLiveData<Person>
         get() = _wrongPerson1*/
 
-    var wrongPerson2: MutableLiveData<Person> = MutableLiveData()
+    var wrongPerson2: MutableLiveData<Person?> = MutableLiveData()
 
     /*val wrongPerson2: MutableLiveData<Person>
         get() = _wrongPerson2*/
@@ -66,7 +66,7 @@ class QuizViewModel(application:Application) : ViewModel() {
 
     var personList: List<Person> = listOf()
 
-    var randomList: List<Person?> = listOf()
+    var randomList: List<MutableLiveData<Person?>> = listOf()
 
 
 
@@ -93,9 +93,9 @@ class QuizViewModel(application:Application) : ViewModel() {
     }
 
     fun randomizeOrder(
-        correctPerson: Person?,
-        wrongPerson1: Person?,
-        wrongPerson2: Person?) : List<Person?> {
+        correctPerson: MutableLiveData<Person?>,
+        wrongPerson1: MutableLiveData<Person?>,
+        wrongPerson2: MutableLiveData<Person?>) : List<MutableLiveData<Person?>> {
 
         randomList  = listOf(correctPerson, wrongPerson1, wrongPerson2)
         return randomList.shuffled().toList()

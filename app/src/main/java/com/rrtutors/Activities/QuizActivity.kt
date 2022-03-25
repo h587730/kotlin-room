@@ -33,8 +33,6 @@ class QuizActivity : AppCompatActivity() {
 
 
     private lateinit var viewmodel: QuizViewModel
-    //private lateinit var personList: List<Person>
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,12 +52,24 @@ class QuizActivity : AppCompatActivity() {
 
         if (viewmodel.rounds == 0) {
             nextRound()
+        } else {
+            viewmodel.randomList.component1().observe(this) { person ->
+                btnAlt1.text = person?.name
+            }
+
+            viewmodel.randomList.component2().observe(this) { person ->
+                btnAlt2.text = person?.name
+            }
+
+            viewmodel.randomList.component3().observe(this) { person ->
+                btnAlt3.text = person?.name
+            }
         }
 
 
         btnAlt1.setOnClickListener {
             Log.i(TAG1, "${viewmodel.personList.component1()} equals ${viewmodel.correctPerson.value}")
-            if (viewmodel.randomList.component1()?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
+            if (viewmodel.randomList.component1().value?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
                 viewmodel.increaseScore()
             }
             viewmodel.increaseAttempts()
@@ -70,7 +80,7 @@ class QuizActivity : AppCompatActivity() {
 
         btnAlt2.setOnClickListener {
             Log.i(TAG1, "${viewmodel.personList.component2()} equals ${viewmodel.wrongPerson1.value}")
-            if (viewmodel.randomList.component2()?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
+            if (viewmodel.randomList.component2().value?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
                 viewmodel.increaseScore()
             }
             viewmodel.increaseAttempts()
@@ -81,7 +91,7 @@ class QuizActivity : AppCompatActivity() {
 
         btnAlt3.setOnClickListener {
             Log.i(TAG1, "${viewmodel.personList.component3()} equals ${viewmodel.wrongPerson2.value}")
-            if (viewmodel.randomList.component3()?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
+            if (viewmodel.randomList.component3().value?.image == (ivQuizPic.drawable as BitmapDrawable).bitmap) {
                 viewmodel.increaseScore()
             }
             viewmodel.increaseAttempts()
@@ -105,24 +115,11 @@ class QuizActivity : AppCompatActivity() {
             tvAttemptsX.text = attempts.toString()
         }
 
-/*
-        viewmodel.correctPerson.observe(this) { correctPerson ->
-            btnAlt1.text = correctPerson.name
-        }*/
-
 
         viewmodel.correctPerson.observe(this){ correctPerson ->
-            ivQuizPic.setImageBitmap(correctPerson.image)
-            Log.i(TAG1, "Correct image: ${correctPerson.image}")
+            ivQuizPic.setImageBitmap(correctPerson?.image)
+            Log.i(TAG1, "Correct image: ${correctPerson?.image}")
         }
-/*
-        viewmodel.wrongPerson1.observe(this) { wrongPerson1 ->
-            btnAlt2.text = wrongPerson1.name
-        }
-
-        viewmodel.wrongPerson2.observe(this) { wrongPerson2 ->
-            btnAlt3.text = wrongPerson2.name
-        }*/
 
     }
 
@@ -136,11 +133,11 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun randomButtons() {
-        viewmodel.randomList = viewmodel.randomizeOrder(viewmodel.correctPerson.value, viewmodel.wrongPerson1.value,
-        viewmodel.wrongPerson2.value)
-        btnAlt1.text = viewmodel.randomList.component1()?.name
-        btnAlt2.text = viewmodel.randomList.component2()?.name
-        btnAlt3.text = viewmodel.randomList.component3()?.name
+        viewmodel.randomList = viewmodel.randomizeOrder(viewmodel.correctPerson, viewmodel.wrongPerson1,
+        viewmodel.wrongPerson2)
+        btnAlt1.text = viewmodel.randomList.component1().value?.name
+        btnAlt2.text = viewmodel.randomList.component2().value?.name
+        btnAlt3.text = viewmodel.randomList.component3().value?.name
     }
 
 
